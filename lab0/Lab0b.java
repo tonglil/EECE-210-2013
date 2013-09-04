@@ -1,4 +1,4 @@
-public class Find {
+public class Lab0b {
 
 /**
 * Find the first occurrence of x in an array a.
@@ -25,7 +25,8 @@ public class Find {
 
     public static void main ( String[] args ) {
         // create an array to search from
-        a = new int[] { 1, 5, 6, 2, 3, 9, 99, 72, 11, 12 };
+        // note the declaration of the array & the initialization
+        int[] a = new int[] { 1, 5, 6, 2, 3, 9, 99, 72, 11, 12 };
 
         // call the search function
         System.out.println( find( 3, a ) );
