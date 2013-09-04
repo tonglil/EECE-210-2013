@@ -15,6 +15,7 @@ public class Lab0b {
 
  
     private static int linearSearch(int x, int[] a) {
+        // notice the use of the length field wrt the array a
         for (int i = 0; i < a.length; ++i) {
             if (x == a[i]) {
                 return i;
