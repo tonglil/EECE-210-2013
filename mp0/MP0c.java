@@ -1,4 +1,4 @@
-class Lab0c {
+class MP0c {
 
 /**
 * Find all prime numbers up to a limit.

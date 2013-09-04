@@ -1,4 +1,4 @@
-public class Lab0b {
+public class MP0b {
 
 /**
 * Find the first occurrence of x in an array a.

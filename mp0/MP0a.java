@@ -2,7 +2,7 @@
  * @author Sathish Gopalakrishnan
  *
  */
-public class Lab0a {
+public class MP0a {
 	static public void main( String[] args ) {
 		int n = 1001;
 		
