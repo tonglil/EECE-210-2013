@@ -51,11 +51,37 @@ class MP0c {
 * @effects If printPrimes is true, prints all primes <= n to output.
 */
     static int findPrimesQuickly(int n, boolean printPrimes) {
-        // REPLACE THIS WITH YOUR CODE
-        // Consider using a labeled continue
-        // Reference: http://docs.oracle.com/javase/tutorial/java/nutsandbolts/branch.html
-        System.out.println("The method findPrimesQuickly has not been implemented");
-        return 0;
+        boolean isPrime = true;
+        int numPrimes = 0;
+
+        for (int i = 2; i <= n; i++) {
+            isPrime = true;
+
+            // Base case for i = 4
+            if (i == 4) {
+                isPrime = false;
+            }
+
+            for (int j = 2; j < Math.sqrt(i); j++) {
+                // If i is a perfect square, not prime
+                if (i % Math.sqrt(i) == 0) {
+                    isPrime = false;
+                    break;
+                }
+                if (i % j == 0) {
+                    isPrime = false;
+                    break;
+                }
+            }
+
+            if (isPrime) {
+                ++numPrimes;
+                if (printPrimes) {
+                    System.out.println(i);
+                }
+            }
+        }
+        return numPrimes;
     }
 
     /**
