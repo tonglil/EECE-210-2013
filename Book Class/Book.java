@@ -4,7 +4,7 @@ public class Book {
     private int ISBN;
 
     // default constructor for the object
-    public Book( ) {
+    public Book() {
         ISBN = 0;
     }
 
@@ -30,17 +30,60 @@ public class Book {
         return author;
     }
 
+    public int getISBN() {
+        return ISBN;
+    }
+
     public static void main(String args[]) {
+        Book book1 = new Book("The Snows of Kilimanjaro");
+        Book book2 = new Book("The Snows of Kilimanjaro");
+
+        if (book1 == book2) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+
+        if (book1.getTitle() == book1.getTitle()) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+
+        if (book1.getTitle() == book2.getTitle()) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+
+        if (book1.getTitle().equals(book2.getTitle())) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+
+        System.out.println();
+
         Book b1 = new Book();
         System.out.println(b1.getTitle());
         System.out.println(b1.getAuthor());
+        System.out.println(b1.getISBN());
 
-        b1 = new Book("Title");
+        b1 = new Book("Program Development in Java");
         System.out.println(b1.getTitle());
         System.out.println(b1.getAuthor());
+        System.out.println(b1.getISBN());
 
         b1 = new Book("Title", "Author");
         System.out.println(b1.getTitle());
         System.out.println(b1.getAuthor());
+        System.out.println(b1.getISBN());
+
+        System.out.println();
+
+        b1.title = "As I Lay Dying";
+        System.out.println(b1.getTitle());
+
+        //Book b2 = (Book) b1.clone();
     }
 }
