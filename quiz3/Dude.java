@@ -34,7 +34,7 @@ public class Dude {
 		Dude d2 = new Dude( "Bilbo" );
 		Dude d3 = d2;
 		
-		// Armour a = new Armour( );			// line a
+		Armour a = new Armour( );			// line a
 		Armour b = d3.new Armour( );			// line b
 		System.out.println( Dude.getNumDudes( ) );	// line c
 		System.out.println( d3.getNumDudes( ) );	// line d
