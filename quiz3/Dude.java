@@ -18,7 +18,7 @@ public class Dude {
 	}
 	
 	private class Armour {
-		public int protection = 10;
+		private int protection = 10;
 	}
 	
 	public static void main( String[ ] args ) {
