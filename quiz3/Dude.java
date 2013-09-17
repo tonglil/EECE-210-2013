@@ -1,5 +1,3 @@
-package quiz3;
-
 public class Dude {
 	private String name;
 	private int hp;
@@ -28,12 +26,11 @@ public class Dude {
 		Dude d2 = new Dude( "Bilbo" );
 		Dude d3 = d2;
 		
-		Armour a = new Armour( );						// line a
-		Armour b = d3.new Armour( );					// line b
-		
-		System.out.println( Dude.getNumDudes( ) );		// line c
-		System.out.println( d3.getNumDudes( ) );		// line d
-		System.out.println( b.protection );				// line e
+		Armour a = new Armour( );			// line a
+		Armour b = d3.new Armour( );			// line b
+		System.out.println( Dude.getNumDudes( ) );	// line c
+		System.out.println( d3.getNumDudes( ) );	// line d
+		System.out.println( b.protection );		// line e
 	}
 	
 }
