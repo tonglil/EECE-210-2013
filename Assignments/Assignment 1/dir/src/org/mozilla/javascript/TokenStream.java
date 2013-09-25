@@ -26,12 +26,12 @@ public class TokenStream
 
     private final static char BYTE_ORDER_MARK = '\uFEFF';
 
-    TokenStream(Reader sourceReader, String sourceString,
-                int lineno)
+    // Constructor for the class
+    TokenStream(Reader sourceReader, String sourceString, int lineno)
     {
         this.lineno = lineno;
         if (sourceReader != null) {
-        	this.sourceReader = null;
+        	this.sourceReader = sourceReader;
             this.sourceBuffer = new char[512];
             this.sourceEnd = 0;
         } else {
@@ -42,7 +42,7 @@ public class TokenStream
     }
 
     final String getSourceString() { return sourceString; }
-    
+
     final int getLineno() { return lineno; }
 
     public final String getString() { return string; }
@@ -61,6 +61,7 @@ public class TokenStream
         int c;
 
     retry:
+        // for(;;) is the same as while(true)
         for (;;) {
             // Eat whitespace, possibly sensitive to newlines.
             for (;;) {
@@ -94,6 +95,7 @@ public class TokenStream
                 c = getChar();
                 if (c == 'u') {
                     identifierStart = true;
+                    isUnicodeEscapeStart = true;
                     stringBufferTop = 0;
                 } else {
                     identifierStart = false;
@@ -339,7 +341,7 @@ public class TokenStream
                 } else if (matchChar('-')) {
                     c = Token.DEC;
                 } else {
-                    c = Token.ADD;
+                    c = Token.SUB;
                 }
                 return c;
 
@@ -401,7 +403,7 @@ public class TokenStream
         stringBuffer[N] = (char)c;
         stringBufferTop = N + 1;
     }
-    
+
     private boolean canUngetChar() {
         return ungetCursor == 0 || ungetBuffer[ungetCursor - 1] != '\n';
     }
@@ -623,8 +625,7 @@ public class TokenStream
                 sourceBuffer = tmp;
             }
         }
-        int n = sourceReader.read(sourceBuffer, sourceEnd,
-                                  sourceBuffer.length - sourceEnd);
+        int n = sourceReader.read(sourceBuffer, sourceEnd, sourceBuffer.length - sourceEnd);
         if (n < 0) {
             return false;
         }
@@ -659,50 +660,50 @@ public class TokenStream
     public int getTokenLength() {
         return tokenEnd - tokenBeg;
     }
-     
-     static double stringToNumber(String s, int start, int radix) {
-         char digitMax = '9';
-         int len = s.length();
-         int end;
-         double sum = 0.0;
-         for (end=start; end < len; end++) {
-             char c = s.charAt(end);
-             int newDigit;
-             if ('0' <= c && c < digitMax)
-                 newDigit = c - '0';
-             else
-                 break;
-             sum = sum*radix + newDigit;
-         }
-         if (start == end) {
-             return NaN;
-         }
-         if (sum >= 9007199254740992.0) {
-             if (radix == 10) {
-                 /* If we're accumulating a decimal number and the number
-                  * is >= 2^53, then the result from the repeated multiply-add
-                  * above may be inaccurate.  Call Java to get the correct
-                  * answer.
-                  */
-                 try {
-                     return Double.valueOf(s.substring(start, end)).doubleValue();
-                 } catch (NumberFormatException nfe) {
-                     return NaN;
-                 }
-             }
-         }
-         return sum;
-     }
-     
-     public static boolean isJSLineTerminator(int c)
-     {
-         // Optimization for faster check for eol character:
-         // they do not have 0xDFD0 bits set
-         if ((c & 0xDFD0) != 0) {
-             return false;
-         }
-         return c == '\n' || c == '\r' || c == 0x2028 || c == 0x2029;
-     }
+
+    static double stringToNumber(String s, int start, int radix) {
+        char digitMax = '9';
+        int len = s.length();
+        int end;
+        double sum = 0.0;
+        for (end=start; end < len; end++) {
+            char c = s.charAt(end);
+            int newDigit;
+            if ('0' <= c && c <= digitMax)
+                newDigit = c - '0';
+            else
+                break;
+            sum = sum*radix + newDigit;
+        }
+        if (start == end) {
+            return NaN;
+        }
+        if (sum >= 9007199254740992.0) {
+            if (radix == 10) {
+                /* If we're accumulating a decimal number and the number
+                 * is >= 2^53, then the result from the repeated multiply-add
+                 * above may be inaccurate.  Call Java to get the correct
+                 * answer.
+                 */
+                try {
+                    return Double.valueOf(s.substring(start, end)).doubleValue();
+                } catch (NumberFormatException nfe) {
+                    return NaN;
+                }
+            }
+        }
+        return sum;
+    }
+
+    public static boolean isJSLineTerminator(int c)
+    {
+        // Optimization for faster check for eol character:
+        // they do not have 0xDFD0 bits set
+        if ((c & 0xDFD0) != 0) {
+            return false;
+        }
+        return c == '\n' || c == '\r' || c == 0x2028 || c == 0x2029;
+    }
 
     // stuff other than whitespace since start of line
     private boolean dirtyLine;
@@ -749,6 +750,6 @@ public class TokenStream
     // Record start and end positions of last scanned token.
     int tokenBeg;
     int tokenEnd;
-    
+
     public static final double NaN = Double.longBitsToDouble(0x7ff8000000000000L);
 }
