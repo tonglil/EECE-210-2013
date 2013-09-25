@@ -1,7 +1,7 @@
-.pdf
-.zip
 .DS_Store
-.class
+*.pdf
+*.zip
+*.class
 .classpath
 .project
 .settings/
