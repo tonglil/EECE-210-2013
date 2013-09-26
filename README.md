@@ -1,4 +1,4 @@
-EECE-210-101-2013
+EECE 210 101 2013
 =================
 
-  Source code for EECE 210 101 2013 - UBC
+A repository for code worked used in EECE 210 101 2013.
