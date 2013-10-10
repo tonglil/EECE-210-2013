@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public final class Album extends Element {
 	/**
-	 * Builds a book with the given title, performer and song list
+	 * Builds an album with the given title, performer and song list
 	 * 
 	 * @param title
 	 *            the title of the album
