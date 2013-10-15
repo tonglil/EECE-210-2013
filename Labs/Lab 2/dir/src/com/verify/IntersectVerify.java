@@ -46,7 +46,7 @@ public class IntersectVerify {
 	//@ assignable \nothing;
 	//@ ensures (\result >= 0) && (x < 0 ==> \result == -x) && (x >= 0 ==> \result == x);
 	public static int abs_value(int x) {
-		if (x >= 0) {
+		if (x <= 0) {
 			return (-x);
 		} else {
 			return x;
@@ -59,7 +59,7 @@ public class IntersectVerify {
 	public static void main(String[] args) {
 		int iPoint = 2;
 		int linearVal = findLinearValue(m_m, m_y, iPoint);
-		int quadVal = findQuadraticValue(0, m_b, m_c, iPoint);
+		int quadVal = findQuadraticValue(m_a, m_b, m_c, iPoint);
 		int same = sameVal(linearVal, quadVal);
 		if (same == 1) {
 			m_result = true;
