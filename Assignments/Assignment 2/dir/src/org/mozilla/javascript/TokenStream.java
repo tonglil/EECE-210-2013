@@ -774,7 +774,7 @@ public class TokenStream
 
     //EECE310_TODO: Write requires and assignable specs
     //@ requires sourceBuffer != null && sourceReader != null;
-    //@ assignable sourceBuffer, sourceBuffer[*];
+    //@ assignable sourceBuffer, sourceEnd, sourceCursor, lineStart;
     //@ signals_only RuntimeException, IndexOutOfBoundsException, ArrayStoreException, NullPointerException, IOException; 
     private boolean fillSourceBuffer() throws IOException
     {
@@ -782,8 +782,7 @@ public class TokenStream
         if (sourceEnd == sourceBuffer.length) {
             if (lineStart != 0) {
             	//@ assume sourceBuffer != null && lineStart > 0 && sourceEnd < sourceBuffer.length;
-                System.arraycopy(sourceBuffer, lineStart, sourceBuffer, 0,
-                                 sourceEnd - lineStart);
+                System.arraycopy(sourceBuffer, lineStart, sourceBuffer, 0, sourceEnd - lineStart);
                 sourceEnd -= lineStart;
                 sourceCursor -= lineStart;
                 lineStart = 0;
@@ -794,8 +793,7 @@ public class TokenStream
                 sourceBuffer = tmp;
             }
         }
-        int n = sourceReader.read(sourceBuffer, sourceEnd,
-                                  sourceBuffer.length - sourceEnd);
+        int n = sourceReader.read(sourceBuffer, sourceEnd, sourceBuffer.length - sourceEnd);
         if (n < 0) {
             return false;
         }
@@ -833,7 +831,7 @@ public class TokenStream
     //EECE310_TODO: Write requires, assignable, and ensures specs
     //@ requires tokenEnd > tokenBeg;
     //@ assignable \nothing;
-    //@ ensures \result > 0;
+    //@ ensures \result > 0 && \result == tokenEnd - tokenBeg;
     public int getTokenLength() {
         return tokenEnd - tokenBeg;
     }
