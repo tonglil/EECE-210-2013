@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class MP0c {
 
 /**
@@ -57,15 +59,13 @@ class MP0c {
         for (int i = 2; i <= n; i++) {
             isPrime = true;
 
-            // Base case for i = 4
-            if (i == 4) {
-                isPrime = false;
-            }
+            //System.out.println("this is the number we are currently at: "+i);
+            for (int j = 2; j < i; j++) {
+                //System.out.println("checking i: "+i);
+                //System.out.println("dividing j: "+j);
 
-            for (int j = 2; j < Math.sqrt(i); j++) {
-                // If i is a perfect square, not prime
-                if (i % Math.sqrt(i) == 0) {
-                    isPrime = false;
+                if (j > Math.sqrt(i)) {
+                    isPrime = true;
                     break;
                 }
                 if (i % j == 0) {
@@ -84,7 +84,7 @@ class MP0c {
         return numPrimes;
     }
 
-    /**
+/**
 * Find all prime numbers up to a limit.
 *
 * Improves on the faster algorithm by limiting the number of values we
@@ -100,10 +100,35 @@ class MP0c {
 * @effects If printPrimes is true, prints all primes <= n to output.
 */
     static int findPrimesMoreQuickly(int n, boolean printPrimes) {
-        // REPLACE THIS WITH YOUR CODE
-        // Hint: Utilize an array to store the prime numbers we have already found.
-        System.out.println("The method findPrimesMoreQuickly has not been implemented");
-        return 0;
+        boolean isPrime = true;
+        int numPrimes = 0;
+        ArrayList<Integer> primes = new ArrayList<Integer>(1);
+
+       /* if (n = 0 || n = 1){
+            numPrimes = 0;
+        }*/
+
+        for (int i = 2; i <= n; i++) {
+            isPrime = true;
+
+            for (int index = 0; index < numPrimes && index <= Math.sqrt(i); index ++){
+                if (i % primes.get(index) == 0){
+                    isPrime = false;
+                    break;
+                    }
+            }
+
+            if (isPrime) {
+                ++numPrimes;
+                primes.add(i);
+
+                if (printPrimes) {
+                    System.out.println(i);
+
+                }
+            }
+        }
+        return numPrimes;
     }
 
     public static void main(String[] args) {
@@ -151,21 +176,21 @@ class MP0c {
 
         System.out.print("\n\nTiming method findPrimes:");
         startTime = System.currentTimeMillis();
-        numPrimes = findPrimes(80000, false);
+        numPrimes = findPrimes(180000, false);
         endTime = System.currentTimeMillis();
         System.out.println(" " + (endTime - startTime) + " milliseconds");
         System.out.println(numPrimes + " primes <= 80000");
 
         System.out.print("\nTiming method findPrimesFaster:");
         startTime = System.currentTimeMillis();
-        numPrimes = findPrimesQuickly(80000, false);
+        numPrimes = findPrimesQuickly(180000, false);
         endTime = System.currentTimeMillis();
         System.out.println(" " + (endTime - startTime) + " milliseconds");
         System.out.println(numPrimes + " primes <= 80000");
 
         System.out.print("\nTiming method findPrimesEvenFaster:");
         startTime = System.currentTimeMillis();
-        numPrimes = findPrimesMoreQuickly(80000, false);
+        numPrimes = findPrimesMoreQuickly(180000, false);
         endTime = System.currentTimeMillis();
         System.out.println(" " + (endTime - startTime) + " milliseconds");
         System.out.println(numPrimes + " primes <= 80000");
