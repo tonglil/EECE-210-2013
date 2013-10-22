@@ -21,7 +21,6 @@ public class UserTest {
 		Book book2 = book;
 		user.addToList( book );
 		assertEquals( true, user.hasItem( book2 ));
-		
 	}
 
 }

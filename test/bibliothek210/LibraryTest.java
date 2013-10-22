@@ -31,7 +31,7 @@ public class LibraryTest {
 	}
 	
 	@Test
-	public void testContentTypeCount( ) {
+	public void testContentTypeCount1( ) {
 		
 		Book b1 = new Book ( "Book 1", "Author 1" );
 		Book b2 = new Book ( "Book 2", "Author 2" );
@@ -43,6 +43,18 @@ public class LibraryTest {
 		
 		assertEquals( 2, n );		
 	}
+	
+	@Test
+	public void testContentTypeCount2( ) {
+		
+		Library lib = new Library( );
+		// TODO: add more here
+		
+		int n = lib.getContentTypeCount( "DVD" );
+		
+		assertEquals( 3, n );		
+	}
+	
 	
 	@Test
 	public void testAddDuplicateUser( ) {
@@ -63,6 +75,14 @@ public class LibraryTest {
 		lib.addItem( b );
 		lib.addUser( u );
 		lib.checkout( b, u );
+		assertEquals( true, lib.processReturn(b) );
+	}
+	
+	@Test
+	public void testCheckoutAndReturnWithID( ) {
+		Library lib = new Library( );
+		int b = 10, u = 10; // arbitrary ids. should be re-written
+		lib.checkout(10, 10);
 		assertEquals( true, lib.processReturn(b) );
 	}
 	
