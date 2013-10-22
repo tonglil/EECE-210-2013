@@ -118,8 +118,10 @@ public abstract class LibraryHolding {
 	}
 	
 	/**
-	 * Method to process an item's return
-	 * @return true if the item was correctly returned, false otherwise
+	 * Method to process an item's return.
+	 * @return true if the item was correctly returned, false otherwise.
+	 * This method only changes the status of the item and not of the user
+	 * that had checked out the item.
 	 */
 	public boolean processReturn( ) {
 		
