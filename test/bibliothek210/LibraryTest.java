@@ -51,6 +51,9 @@ public class LibraryTest {
 		// TODO: add more here
 		
 		int n = lib.getContentTypeCount( "DVD" );
+		// for this test, you must create a new class, DVD, that extends
+		// LibraryHolding, and add objects of that class to the library.
+		// See "Book.java" for a starting point
 		
 		assertEquals( 3, n );		
 	}
