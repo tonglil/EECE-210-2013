@@ -1,3 +1,48 @@
+/* -*- Mode: java; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
+ *
+ * ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Rhino code, released
+ * May 6, 1999.
+ *
+ * The Initial Developer of the Original Code is
+ * Netscape Communications Corporation.
+ * Portions created by the Initial Developer are Copyright (C) 1997-1999
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *   Roger Lawrence
+ *   Mike McCabe
+ *   Igor Bukanov
+ *   Ethan Hugg
+ *   Bob Jervis
+ *   Terry Lucas
+ *   Milen Nankov
+ *   Steve Yegge
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * the GNU General Public License Version 2 or later (the "GPL"), in which
+ * case the provisions of the GPL are applicable instead of those above. If
+ * you wish to allow use of your version of this file only under the terms of
+ * the GPL and not to allow others to use your version of this file under the
+ * MPL, indicate your decision by deleting the provisions above and replacing
+ * them with the notice and other provisions required by the GPL. If you do
+ * not delete the provisions above, a recipient may use your version of this
+ * file under either the MPL or the GPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
 package org.mozilla.javascript;
 
 import java.io.*;
@@ -21,14 +66,12 @@ public class TokenStream
      * to check.  (And checking EOF by exception is annoying.)
      * Note distinction from EOF token type!
      */
-    private final static int
-        EOF_CHAR = -1;
+    private final static int EOF_CHAR = -1;
 
     private final static char BYTE_ORDER_MARK = '\uFEFF';
 
     //@ ensures (this.sourceString != null ==> this.sourceReader == null) && (this.sourceString == null ==> this.sourceReader != null) && (this.sourceEnd >= 0) && (this.sourceCursor == 0 && this.cursor == 0);
-    TokenStream(Reader sourceReader, String sourceString,
-                int lineno)
+    TokenStream(Reader sourceReader, String sourceString, int lineno)
     {
         this.lineno = lineno;
         if (sourceReader != null) {
@@ -76,7 +119,7 @@ public class TokenStream
         		(!(name.equals("else") || name.equals("false") || name.equals("function") || name.equals("if") || name.equals("return") || name.equals("true")) ==> \result == Token.EOF) &&
         		((\result == 0) || (\result == 113) || (\result == 44) || (\result == 109) || (\result == 112) || (\result == 4) || (\result == 45));
     @*/ 
-    private static int stringToKeyword(String name)
+    public static int stringToKeyword(String name)
     {
     	// The following assumes that Token.EOF == 0
         final int
@@ -106,13 +149,11 @@ public class TokenStream
         else if (s.equals("return")) {
         	id = Id_return;
         }
-        // Bug1
         else if (s.equals("true")) {
         	id = Id_true;
         }
-        else if (id == 0) {
-        	return Token.EOF;
-        }
+
+        if (id == 0) { return Token.EOF; }
         return id;
     }
 
@@ -131,13 +172,13 @@ public class TokenStream
     }
 
     //@ ensures \result == number;
-    final double getNumber() { return number; }
+    public final double getNumber() { return number; }
     
     //@ ensures \result == isOctal;
-    final boolean isNumberOctal() { return isOctal; }
+    public final boolean isNumberOctal() { return isOctal; }
 
     //@ ensures \result == hitEOF;
-    final boolean eof() { return hitEOF; }
+    public final boolean eof() { return hitEOF; }
 
     //@ requires stringBuffer != null && (sourceString == null ==> (sourceBuffer != null && sourceReader != null));
     //@ ensures \result >= -1 && \result <= 162;
@@ -301,7 +342,6 @@ public class TokenStream
                 this.string = numString;
 
                 double dval;
-                // Bug2
                 int radix = base;
                 // @ assume numString != null;
                 dval = stringToNumber(numString, 0, radix);
@@ -499,7 +539,7 @@ public class TokenStream
      * '\r' == \u000D as well.
      */
     //@ ensures c <= 127 ==> \result == (c == 0x20 || c == 0x9 || c == 0xC || c == 0xB);
-    static boolean isJSSpace(int c)
+    public static boolean isJSSpace(int c)
     {
         if (c <= 127) {
             return c == 0x20 || c == 0x9 || c == 0xC || c == 0xB;
@@ -523,10 +563,8 @@ public class TokenStream
         return new String(stringBuffer, 0, stringBufferTop);
     }
 
-    //EECE310_TODO: Write requires, assignable, and ensures specs
     //@ requires stringBuffer != null;
-    //@ assignable stringBuffer, stringBuffer[*], stringBufferTop;
-    //@ ensures stringBufferTop == \old(stringBufferTop + 1);
+    //@ ensures stringBufferTop == \old(stringBufferTop) + 1;
     private void addToString(int c)
     {
         int N = stringBufferTop;
@@ -688,10 +726,9 @@ public class TokenStream
         }
     }
 
-    //EECE310_TODO: Write requires, assignable, and ensures specs
     //@ requires ungetBuffer != null;
     //@ assignable ungetBuffer[*], ungetCursor, cursor;
-    //@ ensures ungetBuffer[\old(ungetCursor)] == c && ungetCursor == \old(ungetCursor + 1) && cursor == \old(cursor - 1);
+    //@ ensures cursor == \old(cursor) - 1 && ungetCursor == \old(ungetCursor) + 1;
     private void ungetCharIgnoreLineEnd(int c)
     {
         ungetBuffer[ungetCursor++] = c;
@@ -713,10 +750,9 @@ public class TokenStream
     /**
      * Returns the offset into the current line.
      */
-    //EECE310_TODO: Write requires, assignable, and ensures specs
-    //@ requires lineEndChar >= 0 ==> sourceCursor > lineStart && lineEndChar < 0 ==> sourceCursor >= lineStart;
+    //@ requires (lineEndChar >= 0 ==> sourceCursor > lineStart) && (lineEndChar < 0 ==> sourceCursor >= lineStart);
     //@ assignable \nothing;
-    //@ ensures lineEndChar >= 0 ==> \result == sourceCursor - lineStart - 1 && lineEndChar < 0 ==> \result == sourceCursor - lineStart;
+    //@ ensures \result >= 0;
     final int getOffset()
     {
         int n = sourceCursor - lineStart;
@@ -772,9 +808,8 @@ public class TokenStream
         }
     }
 
-    //EECE310_TODO: Write requires and assignable specs
     //@ requires sourceBuffer != null && sourceReader != null;
-    //@ assignable sourceBuffer, sourceEnd, sourceCursor, lineStart;
+    //@ assignable sourceBuffer[*], sourceEnd, sourceCursor, lineStart, sourceReader, \not_specified;
     //@ signals_only RuntimeException, IndexOutOfBoundsException, ArrayStoreException, NullPointerException, IOException; 
     private boolean fillSourceBuffer() throws IOException
     {
@@ -782,7 +817,8 @@ public class TokenStream
         if (sourceEnd == sourceBuffer.length) {
             if (lineStart != 0) {
             	//@ assume sourceBuffer != null && lineStart > 0 && sourceEnd < sourceBuffer.length;
-                System.arraycopy(sourceBuffer, lineStart, sourceBuffer, 0, sourceEnd - lineStart);
+                System.arraycopy(sourceBuffer, lineStart, sourceBuffer, 0,
+                                 sourceEnd - lineStart);
                 sourceEnd -= lineStart;
                 sourceCursor -= lineStart;
                 lineStart = 0;
@@ -793,7 +829,8 @@ public class TokenStream
                 sourceBuffer = tmp;
             }
         }
-        int n = sourceReader.read(sourceBuffer, sourceEnd, sourceBuffer.length - sourceEnd);
+        int n = sourceReader.read(sourceBuffer, sourceEnd,
+                                  sourceBuffer.length - sourceEnd);
         if (n < 0) {
             return false;
         }
@@ -828,10 +865,9 @@ public class TokenStream
     /**
      * Return tokenEnd - tokenBeg
      */
-    //EECE310_TODO: Write requires, assignable, and ensures specs
     //@ requires tokenEnd > tokenBeg;
     //@ assignable \nothing;
-    //@ ensures \result > 0 && \result == tokenEnd - tokenBeg;
+    //@ ensures \result > 0 && \result == (tokenEnd - tokenBeg);
     public int getTokenLength() {
         return tokenEnd - tokenBeg;
     }
