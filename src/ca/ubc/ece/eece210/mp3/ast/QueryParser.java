@@ -59,6 +59,11 @@ public class QueryParser {
      * Process an AND expression and return a node that represents the
      * root of the tree for the AND expression.
      * 
+     * This method determines if the next unprocessed portion of the query
+     * is an AND expression or not. If it is then it creates a tree that represents
+     * the AND expression. This tree typically become a subtree of the AST for the
+     * complete query.
+     * 
      * @return the root of the tree that represents an AND expression.
      */
     protected ASTNode andExpr() {
