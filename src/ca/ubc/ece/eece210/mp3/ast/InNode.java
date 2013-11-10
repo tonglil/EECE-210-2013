@@ -11,6 +11,12 @@ public class InNode extends ASTNode {
 	super(token);
     }
 
+    /**
+     * This method interprets the ANDNode and returns the set of Elements 
+     * that satisfies the conditions of the ORNode.
+     * 
+     * @return Set of Elements that satisfy the criteria indcated by the ORNode.
+     */
     @Override
     public Set<Element> interpret(Catalogue argument) {
 	// TODO Auto-generated method stub
