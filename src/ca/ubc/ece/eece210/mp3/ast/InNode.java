@@ -12,10 +12,10 @@ public class InNode extends ASTNode {
     }
 
     /**
-     * This method interprets the ANDNode and returns the set of Elements 
-     * that satisfies the conditions of the ORNode.
+     * This method interprets the InNode and returns the set of Elements 
+     * that satisfies the conditions of the InNode.
      * 
-     * @return Set of Elements that satisfy the criteria indcated by the ORNode.
+     * @return Set of Elements that satisfy the criteria indcated by the InNode.
      */
     @Override
     public Set<Element> interpret(Catalogue argument) {
