@@ -5,6 +5,8 @@ import java.util.Map;
 
 /**
  * 
+ * This class represents a token in the simple query language we are using.
+ * 
  * @author Sathish Gopalakrishnan
  *
  */
@@ -16,6 +18,7 @@ public class Token {
 
     public static final Map<String, Token> staticTokens = new HashMap<String, Token>();
 
+    // map the strings/characters that represent specific tokens to their enum identifiers.
     static {
 	staticTokens.put("||", new Token(TokenType.OR, "||"));
 	staticTokens.put("&&", new Token(TokenType.AND, "&&"));
