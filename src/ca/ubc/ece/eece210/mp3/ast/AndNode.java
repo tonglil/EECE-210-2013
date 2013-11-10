@@ -21,7 +21,7 @@ public class AndNode extends ASTNode {
      * This method interprets the ANDNode and returns the set of Elements 
      * that satisfies the conditions of the ANDNode.
      * 
-     * @rertun Set of Elements that satisfy the criteria indcated by the ANDNode.
+     * @return Set of Elements that satisfy the criteria indcated by the ANDNode.
      */
     @Override
     public Set<Element> interpret(Catalogue argument) {
