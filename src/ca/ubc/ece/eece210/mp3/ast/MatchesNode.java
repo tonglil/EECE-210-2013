@@ -11,6 +11,12 @@ public class MatchesNode extends ASTNode {
 	super(token);
     }
 
+    /**
+     * This method interprets the MatchesNode and returns the set of Elements 
+     * that satisfies the conditions of the MatchesNode.
+     * 
+     * @return Set of Elements that satisfy the criteria indcated by the MatchesNode.
+     */
     @Override
     public Set<Element> interpret(Catalogue argument) {
 	// TODO Auto-generated method stub
