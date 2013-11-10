@@ -114,7 +114,7 @@ public class QueryParser {
 
     /**
      * Process the leaf nodes of the AST.
-     * @return a leaf node of the AST/
+     * @return a leaf node of the AST.
      */
     @SuppressWarnings("rawtypes")
     private ASTNode processLeaveNodes(Token token) {
