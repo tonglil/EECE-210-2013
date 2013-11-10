@@ -9,6 +9,9 @@ import java.util.List;
  * 
  * This class has no error corrections and is a very simplistic tokenizer.
  * 
+ * No detailed specs because it is not necessary to make changes here.
+ * At least there should be no need to change the tokenizer.
+ * 
  * @author Sathish Gopalakrishnan
  * 
  */
