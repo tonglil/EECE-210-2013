@@ -9,7 +9,6 @@ public class ConcurrentProg {
         for (int i = 0; i < 4; i++) {
             new Thread(cp.new PrintMsg()).start();
         }
-
     }
 
     private static int incBy100000() {
@@ -26,7 +25,6 @@ public class ConcurrentProg {
             int tag;
             synchronized (tagCounterLock) {
                 tag = incBy100000();
-
             }
             System.out.println("This is thread " + tag);
         }
