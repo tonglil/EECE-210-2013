@@ -1,6 +1,6 @@
 var fs = require('fs');
 
-var data = fs.readFileSync('./marks.txt', 'UTF8')
+var data = fs.readFileSync('../marks.txt', 'UTF8')
 if (!data) { return false; }
 
 var marks = data.split('\n');
