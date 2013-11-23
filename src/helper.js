@@ -1,3 +1,22 @@
+// Sorts grades in descending order
+// @par:    object
+// @par:    string  grade column name (default 'grade')
+// @par:    string  sorting order (default descending)
+exports.sort = function(object, colName, order) {
+    colName = (colName || 'grade');
+    order = (order || null);
+
+    var done = object.sort(function(a,b) {
+        if (order === 'asc') {
+            return a[colName] - b[colName];
+        } else {
+            return b[colName] - a[colName];
+        }
+    });
+
+    return done;
+}
+
 // Helper function for cloning an object (until a constructor for grade data is built)
 // http://stackoverflow.com/questions/728360/most-elegant-way-to-clone-a-javascript-object
 // @par:    object  any object to be cloned

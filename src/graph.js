@@ -1,4 +1,5 @@
-helper = require('./helper.js');
+var path = require('path');
+var helper = require(path.resolve(__dirname, 'helper.js'));
 
 // Outputs general stats about input
 // @par:    object  list of grades

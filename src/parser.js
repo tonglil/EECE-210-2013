@@ -36,7 +36,7 @@ exports.cleanData = function(parsed, colName) {
     return cleaned;
 }
 
-// Parse a delimited string into an array of arrays.
+// Parse a delimited string into an array of arrays
 // http://www.bennadel.com/blog/1504-Ask-Ben-Parsing-CSV-Strings-With-Javascript-Exec-Regular-Expression-Command.htm
 // @par:    string  delimited string
 // @par:    string  delimiter (default ',')
