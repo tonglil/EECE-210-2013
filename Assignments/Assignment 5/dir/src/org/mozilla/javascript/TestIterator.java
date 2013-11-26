@@ -16,9 +16,7 @@ public class TestIterator {
 			System.out.println("Enter JavaScript File To Parse: ");
 			System.out.flush();
 			String js_file = br.readLine();
-			
-			System.out.println("Test 2");
-			
+						
 			//Parse the file
 			Parser p = new Parser();
 			AstRoot root = p.parse(new FileReader(js_file), "", 1);
