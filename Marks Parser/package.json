@@ -1,0 +1,23 @@
+{
+  "name": "ubc-marks-parser",
+  "version": "0.1",
+  "author": "Tony Li <webmaster@tonyli.ca>",
+  "description": "a program created to parse eece 210 marks (for fun)",
+  "url": "http://tonyli.ca",
+  "main": "./src/index.js",
+  "dependencies": {
+    "commander": ">=1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oscmejia/tutorial-nodejs-cli"
+  },
+  "keywords": [
+    "ubc",
+    "parser"
+  ],
+  "license": "proprietary",
+  "engines": {
+    "node": ">=0.6"
+  }
+}
