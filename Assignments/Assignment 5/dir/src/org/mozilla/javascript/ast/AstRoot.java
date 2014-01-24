@@ -198,6 +198,7 @@ public class AstRoot extends ScriptNode implements Cloneable {
     	 * Return the generator
     	 */
     	
+    	// Returns the generator for the iterator
     	return new AstNodeGenerator_Depth(this);
     }
     
@@ -210,8 +211,11 @@ public class AstRoot extends ScriptNode implements Cloneable {
     	/*EECE310_TODO:
     	 * Declare whatever extra member variables you want to include here, if any
     	 */
+    	// Counter to keep track of index in the iteration
     	private int counter = 0;
+    	// Unsorted list of nodes from the js file
     	private ArrayList<AstNode> parsedNodes = new ArrayList<AstNode>();
+    	// Sorted list of nodes after finding the deepest node
     	private ArrayList<AstNode> sortedNodes = new ArrayList<AstNode>();
     	
     	/*EECE310_TODO:
@@ -226,15 +230,18 @@ public class AstRoot extends ScriptNode implements Cloneable {
     		 * You may add extra code in this constructor if you wish,
     		 * but do NOT modify the first two lines
     		 */
+    		// Visit the child nodes from the root node
     		astRt.visit(this);
     		
     		int depth = 0;
     		for (AstNode kid : parsedNodes) {
+    			// Looking to find the depth of the nodes
     			if (kid.depth() > depth) {
     				depth = kid.depth();
     			}
     		}
     		
+    		// Sort the nodes based on depth, from lowest to highest
     		for (int i = 0; i <= depth; i++) {
     			for (AstNode kid : parsedNodes) {
     				if (kid.depth() == i) {
@@ -251,8 +258,10 @@ public class AstRoot extends ScriptNode implements Cloneable {
 			 * has elements to retrieve
 			 */
 			if (counter == sortedNodes.size()) {
+				// If at the end of the iterator
 				return false;
 			} else {
+				// Otherwise still elements to iterate over
 				return true;
 			}
 		}
@@ -270,9 +279,14 @@ public class AstRoot extends ScriptNode implements Cloneable {
 			 * you should throw a NoSuchElementException if there is
 			 * no next element.
 			 */
+			// Use has next to determine if we can iterate
 			if (hasNext()) {
-				return sortedNodes.get(counter++);
+				// Update the next node, then increment the index in the iteration, and return the next node
+				AstNode current = next;
+				next = sortedNodes.get(++counter);
+				return current;
 			} else {
+				// Otherwise throw the exception
 				throw new NoSuchElementException("AstRoot.astIterator_depth");
 			}
 		}
@@ -282,7 +296,9 @@ public class AstRoot extends ScriptNode implements Cloneable {
 		 * include here, if any (e.g., comparators, node visitors, etc.)
 		 */
 		@Override
+		// Provide the visit function to this class
 		public boolean visit(AstNode node) {
+			// Add each visited node to the unsorted list of nodes
 			parsedNodes.add(node);
 			return true;
 		}
